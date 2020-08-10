@@ -1,0 +1,15 @@
+name: toolbox
+channels:
+  - conda-forge
+  - default
+dependencies:
+  - python=3.6
+  - pip
+  - pybuilder
+  - pandas
+  - tblib
+  - pip:
+      - coverage
+      - flake8
+      - pypandoc
+      - unittest-xml-reporting
