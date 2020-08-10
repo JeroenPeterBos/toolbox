@@ -1,5 +1,35 @@
 #!/usr/bin/env python
 
-from toolbox import say
-say()
+import argparse
+import os
+from pathlib import Path
 
+from toolbox.wbso import process_clockify_to_wbso
+
+
+def pathlib_csvpath(parser, arg, exists=False):
+    path = Path(arg)
+
+    if path.suffix != '.csv':
+        parser.error(f'The file {path} is not a csv file.')
+
+    if exists:
+        if not path.is_file():
+            parser.error(f'The file {path} does not exist!')
+    else:
+        if not path.parent.is_dir():
+            parser.error(f'The folder {path.parent} does not exist!')
+
+    return path
+
+
+parser = argparse.ArgumentParser(description='Clockify export csv to WBSO spreadsheet converter.')
+parser.add_argument('in', type=lambda x: pathlib_csvpath(parser, x, exists=True), help='Path to the Clockify export.')
+parser.add_argument('out', type=lambda x: pathlib_csvpath(parser, x), help='Path to the output csv.')
+
+parser.print_help()
+args = vars(parser.parse_args())
+
+print("\n\nProcessing...")
+process_clockify_to_wbso(args['in'], args['out'])
+print("Done!")
