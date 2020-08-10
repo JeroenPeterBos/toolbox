@@ -1,0 +1,11 @@
+# Ignore the pycharm config
+.idea
+
+# Ignore the pybuilder stuff
+.pybuilder
+target
+.coverage
+
+# Ignore compiled python files
+.pyc
+__pycache__
